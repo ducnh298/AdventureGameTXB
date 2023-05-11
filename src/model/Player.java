@@ -1,12 +1,20 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Player {
     private int playerHP;
-    private Weapon weapon;
+    private List<Weapon> weaponList = new ArrayList<>();
+    private Armor armor;
 
-    public Player(int playerHP, Weapon weapon) {
+    public Player(int playerHP) {
         this.playerHP = playerHP;
-        this.weapon = weapon;
+    }
+
+    public Player(int playerHP, List<Weapon> weaponList) {
+        this.playerHP = playerHP;
+        this.weaponList = weaponList;
     }
 
     public int getPlayerHP() {
@@ -15,8 +23,8 @@ public class Player {
 
     public void restoreHP(int amount) {
         playerHP += amount;
-        if (playerHP > 10)
-            playerHP = 10;
+        if (playerHP > 20)
+            playerHP = 20;
     }
 
     public void loseHP(int amount) {
@@ -25,11 +33,19 @@ public class Player {
             playerHP = 0;
     }
 
-    public Weapon getWeapon() {
-        return weapon;
+    public List<Weapon> getWeaponList() {
+        return weaponList;
     }
 
-    public void setWeapon(Weapon weapon) {
-        this.weapon = weapon;
+    public void addWeapon(Weapon weapon) {
+        weaponList.add(weapon);
+    }
+
+    public Armor getArmor() {
+        return armor;
+    }
+
+    public void setArmor(Armor armor) {
+        this.armor = armor;
     }
 }
