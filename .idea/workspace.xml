@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9a7e5983-4591-493c-a3b9-da1c6c1ba2d0" name="Changes" comment="first commit">
-      <change afterPath="$PROJECT_DIR$/src/controller/VisibilityManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/model/Armor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/view/Story.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/view/UI.java" afterDir="false" />
+    <list default="true" id="9a7e5983-4591-493c-a3b9-da1c6c1ba2d0" name="Changes" comment="Restruct code, add menu to restart or quit game">
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controller/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/img/Map.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/img/Map.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/VisibilityManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/VisibilityManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/img/Map.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/img/map.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/Story.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/Story.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/UI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/UI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,7 +88,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681823978696</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Restruct code, add menu to restart or quit game">
+      <created>1683802543972</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1683802543972</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -106,17 +111,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="first commit" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/view/UI.java</url>
-          <line>29</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Restruct code, add menu to restart or quit game" />
+    <option name="LAST_COMMIT_MESSAGE" value="Restruct code, add menu to restart or quit game" />
   </component>
 </project>

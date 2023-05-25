@@ -6,7 +6,6 @@ import model.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowEvent;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -34,8 +33,8 @@ public class Story {
     Monster goblin;
     Monster riverMonster;
 
-    String position;
-    boolean isAngryGuard, isRestAtTent, isDefeatedRiverMonster, isDefeatedGoblin, isTakenArmor;
+    String position, lastPosition;
+    boolean isAngryGuard, isRestAtTent, isALiveRiverMonster, isALiveGoblin, isAliveDemonKing, isTakenArmor;
     int appleOnTree;
     Random rand = new Random();
 
@@ -49,15 +48,20 @@ public class Story {
         difficultRate = ((Difficulty) difficulties.getElementAt(ui.difficultyComboBox.getSelectedIndex())).getValue();
 
         player = new Player(20);
-        ui.hpNumberLabel.setText(player.getPlayerHP() + "/20");
+        ui.hpLabel.setText("HP: " + player.getPlayerHP() + "/20");
         player.addWeapon(weaponMap.get("Knife"));
         player.getWeaponList().forEach(weapon -> ui.weaponComboBox.addItem(weapon.getName()));
+        ui.weaponComboBox.removeAllItems();
+        ui.weaponComboBox.addItem(weaponMap.get("Knife").getName());
+        ui.mapButton.setVisible(false);
 
-        isAngryGuard = isRestAtTent = isDefeatedRiverMonster = isDefeatedGoblin = isTakenArmor = false;
+        isAngryGuard = isRestAtTent = isTakenArmor = false;
+        isALiveRiverMonster = isALiveGoblin = true;
+
         appleOnTree = 3;
 
         goblin = new Monster("Goblin", (int) Math.ceil(6 * difficultRate), (int) Math.ceil(2 * difficultRate));
-        riverMonster = new Monster("River monster", (int) Math.ceil(10 * difficultRate), (int) Math.ceil(4 * difficultRate));
+        riverMonster = new Monster("River monster", (int) Math.ceil(12 * difficultRate), (int) Math.ceil(4 * difficultRate));
         vm.showGameScreen();
         townGate();
     }
@@ -67,8 +71,17 @@ public class Story {
             case "townGate":
                 townGate();
                 break;
-            case "talkGuard":
-                talkGuard();
+            case "map":
+                map();
+                break;
+            case "talkGuard1":
+                talkGuard1();
+                break;
+            case "talkGuard2":
+                talkGuard2();
+                break;
+            case "talkGuard3":
+                talkGuard3();
                 break;
             case "attackGuard":
                 attackGuard();
@@ -112,17 +125,40 @@ public class Story {
             case "attackRiverMonster":
                 attackRiverMonster();
                 break;
+            case "tryToRun":
+                tryToRun();
+                break;
             case "jungle":
                 jungle();
                 break;
             case "hitTheAppleTree":
                 hitTheAppleTree();
                 break;
+            case "demonKingHideout":
+                hitTheAppleTree();
+                break;
         }
+    }
+
+    public void map() {
+        ui.gameImageLabel.setIcon(ui.mapImg);
+
+        ui.mainTextArea.setText("You're checking the map.");
+        ui.choice1.setText("Leave");
+        ui.choice2.setText("");
+        ui.choice3.setText("");
+        ui.choice4.setText("");
+
+        nextPosition1 = position;
+        nextPosition2 = "";
+        nextPosition3 = "";
+        nextPosition4 = "";
     }
 
     public void townGate() {
         position = "townGate";
+        ui.gameImageLabel.setIcon(ui.townGateImg);
+
         ui.mainTextArea.setText("You are now at the gate of the town. \nA guard is standing in front of you.\nWhat would you do?");
         if (isAngryGuard) {
             ui.choice1.setText("Talk to the angry guard");
@@ -134,31 +170,79 @@ public class Story {
         ui.choice3.setText("Enter town");
         ui.choice4.setText("Leave");
 
-        nextPosition1 = "talkGuard";
+        nextPosition1 = "talkGuard1";
         nextPosition2 = "attackGuard";
-        nextPosition3 = "talkGuard";
+        nextPosition3 = "talkGuard1";
         nextPosition4 = "crossRoad";
     }
 
-    public void talkGuard() {
-        position = "talkGuard";
+    public void talkGuard1() {
+        position = "talkGuard1";
+        ui.gameImageLabel.setIcon(ui.guardImg);
+
         if (isAngryGuard)
-            ui.mainTextArea.setText("Guard:\"You again?!\nGet away.\"");
-        else
-            ui.mainTextArea.setText("Guard:\"Hello stranger!\nI have never seen your face before.\nI cannot let stranger in our town.\"");
-        ui.choice1.setText("Leave");
-        ui.choice2.setText("");
+            ui.mainTextArea.setText("Guard:\"You again?!\nGet away.\n" +
+                    "(You: \"Hello! I'm a traveler far from here, on my way to find my brother. His clues lead to this town.\n" +
+                    "How can i get in the town?\")");
+         else
+            ui.mainTextArea.setText("Guard:\"Hello stranger!\nI have never seen your face before.\nI cannot let stranger in our town.\n" +
+                    "(You: \"Hello! I'm a traveler far from here, on my way to find my brother. His clues lead to this town.\n" +
+                    "How can i get in the town?\")");
+
+        ui.choice1.setText("Talk");
+        ui.choice2.setText("Leave");
+        ui.choice3.setText("");
+        ui.choice4.setText("");
+
+        nextPosition1 = "talkGuard2";
+        nextPosition2 = "townGate";
+        nextPosition3 = "";
+        nextPosition4 = "";
+    }
+
+    public void talkGuard2() {
+        position = "talkGuard2";
+        ui.gameImageLabel.setIcon(ui.guardImg);
+
+        ui.mainTextArea.setText("Guard:\"Well! Recently the demon king have expanded his territory closer and closer to us.\n" +
+                "We're not safe anymore. We need a hero to protect our town\n" +
+                "If you repulse him. I'll let you in.\"\n"+
+                "(You: \"How???? How am i supposed to repulse him???\")");
+        ui.choice1.setText("Talk");
+        ui.choice2.setText("Leave");
+        ui.choice3.setText("");
+        ui.choice4.setText("");
+
+        nextPosition1 = "talkGuard3";
+        nextPosition2 = "townGate";
+        nextPosition3 = "";
+        nextPosition4 = "";
+    }
+
+    public void talkGuard3() {
+        position = "talkGuard3";
+        ui.gameImageLabel.setIcon(ui.guardImg);
+        ui.mapButton.setVisible(true);
+
+        ui.mainTextArea.setText("Guard:\"Of course you can not repulse him with your poor gear currently.\n" +
+                "Take this map! I've marked demon king's hideout for you.\n" +
+                "I suggest you go to the blacksmith house first. I think maybe he'll have something for you\"");
+
+        ui.choice1.setText("\"Ok! Thank you.\"");
+        ui.choice2.setText("Leave");
         ui.choice3.setText("");
         ui.choice4.setText("");
 
         nextPosition1 = "townGate";
-        nextPosition2 = "";
+        nextPosition2 = "townGate";
         nextPosition3 = "";
         nextPosition4 = "";
     }
 
     public void attackGuard() {
         position = "attackGuard";
+
+        ui.gameImageLabel.setIcon(ui.guardImg);
         isAngryGuard = true;
 
         int hpLost = (int) Math.ceil(3 * difficultRate);
@@ -180,6 +264,8 @@ public class Story {
 
     public void crossRoad() {
         position = "crossRoad";
+        ui.gameImageLabel.setIcon(ui.crossRoadImg);
+
         ui.mainTextArea.setText("You now at a cross road.\nWhere would you go?");
         ui.choice1.setText("Go North");
         ui.choice2.setText("Go East");
@@ -193,6 +279,8 @@ public class Story {
 
     public void blackSmithHouse() {
         position = "blackSmithHouse";
+        ui.gameImageLabel.setIcon(ui.blackSmithHouseImg);
+
         ui.mainTextArea.setText("There is a blacksmith shop.\nSomeone is forging, look like the owner of this shop");
         ui.choice1.setText("Talk to the blacksmith");
         ui.choice2.setText("Go East");
@@ -206,13 +294,14 @@ public class Story {
 
     public void talkBlackSmith() {
         position = "talkBlackSmith";
-        if (!isDefeatedGoblin) {
+        if (isALiveGoblin) {
             ui.mainTextArea.setText("The BlackSmith: \"Hi there! You are not a familiar face around here, right?" +
                     "\nBefore asking me anything, can you do me a favor?" +
                     "\nThere is a goblin which have caused us so much trouble recently." +
                     "\nLast time i saw it was in the cave south from here." +
                     "\nComeback whenever you've killed that little bitch.\"");
             ui.choice1.setText("\"Yeah! I'm on it.\"");
+            nextPosition1 = "blackSmithHouse";
         } else {
             ui.mainTextArea.setText("The BlackSmith: \"Look like you've kill that goblin. Thank you\"");
             if (!isTakenArmor) {
@@ -223,12 +312,12 @@ public class Story {
                 nextPosition1 = "";
             }
         }
-        ui.choice2.setText("Leave");
-        ui.choice3.setText("");
+        ui.choice2.setText("");
+        ui.choice3.setText("Leave");
         ui.choice4.setText("");
 
-        nextPosition2 = "blackSmithHouse";
-        nextPosition3 = "";
+        nextPosition2 = "";
+        nextPosition3 = "blackSmithHouse";
         nextPosition4 = "";
     }
 
@@ -255,8 +344,10 @@ public class Story {
 
     public void goblinCave() {
         position = "goblinCave";
+        ui.gameImageLabel.setIcon(ui.goblinCaveImg);
+
         ui.mainTextArea.setText("There is a small cave in the mountainside,\nWhat would you do?");
-        if (!isDefeatedGoblin) {
+        if (isALiveGoblin) {
             ui.choice1.setText("Throw a wooden stick into it");
         } else ui.choice1.setText("");
         ui.choice2.setText("Go North");
@@ -269,9 +360,12 @@ public class Story {
     }
 
     public void encounterGoblin() {
+        lastPosition = position;
         position = "encounterGoblin";
+
         if (rand.nextBoolean()) {
             JOptionPane.showMessageDialog(ui.window, "You encounter a goblin!!!");
+            ui.gameImageLabel.setIcon(ui.goblinImg);
             encounterMonster(goblin);
         } else {
             JOptionPane.showMessageDialog(ui.window, "Nothing happen.");
@@ -281,6 +375,8 @@ public class Story {
 
     public void riverSide() {
         position = "riverSide";
+        ui.gameImageLabel.setIcon(ui.riverSideImg);
+
         ui.mainTextArea.setText("You approach a river.\nWhat would you do?");
         ui.choice1.setText("Go North");
         ui.choice2.setText("Go East (cross the river)");
@@ -294,6 +390,8 @@ public class Story {
 
     public void northRiver() {
         position = "northRiver";
+        ui.gameImageLabel.setIcon(ui.northRiverImg);
+
         if (!isRestAtTent) {
             ui.mainTextArea.setText("North of the river.\n\nThere is a old tent on the river side (You can rest to recover 5HP).A wooden bridge cross the river. \nNorthern path lead to a waterfall, we couldn't go further.\nWhat would you do?");
             ui.choice1.setText("Take a rest");
@@ -320,7 +418,9 @@ public class Story {
 
     public void southRiver() {
         position = "southRiver";
-        if (!isDefeatedRiverMonster) {
+        ui.gameImageLabel.setIcon(ui.southRiverImg);
+
+        if (isALiveRiverMonster) {
             ui.mainTextArea.setText("South of the river.\n\nThere is a strange vortex in the middle of the river.\nSouthern path has been blocked by crashed tree, we couldn't go further.\nWhat would you do?");
             ui.choice1.setText("Throw a rock into it");
             nextPosition1 = "encounterRiverMonster";
@@ -338,27 +438,34 @@ public class Story {
     }
 
     public void encounterRiverMonster() {
+        lastPosition = position;
         position = "encounterRiverMonster";
+        ui.gameImageLabel.setIcon(ui.riverMonsterImg);
+
         JOptionPane.showMessageDialog(ui.window, "You encounter a powerful river monster!!!");
         encounterMonster(riverMonster);
     }
 
     public void jungle() {
-        if (!isDefeatedRiverMonster && position.equalsIgnoreCase("riverSide") && crossTheRiver()
-                || isDefeatedRiverMonster || !position.equalsIgnoreCase("riverSide")) {
-            position = "jungle";
-            ui.mainTextArea.setText("You go into the jungle." +
-                    "\nYou see an apple tree." +
-                    "\nWhat would you do?");
-            ui.choice1.setText("Hit the tree");
-            ui.choice2.setText("Go North");
-            ui.choice3.setText("Go South");
-            ui.choice4.setText("Go West(cross the river)");
-            nextPosition1 = "hitTheAppleTree";
-            nextPosition2 = "mountainside";
-            nextPosition3 = "";
-            nextPosition4 = "riverSide";
-        }
+        lastPosition = position;
+        position = "jungle";
+        ui.gameImageLabel.setIcon(ui.jungleImg);
+
+        if (isALiveRiverMonster && lastPosition.equalsIgnoreCase("riverSide") && !crossTheRiver())
+            encounterRiverMonster();
+
+        ui.mainTextArea.setText("You go into the jungle." +
+                "\nYou see an apple tree." +
+                "\nWhat would you do?");
+        ui.choice1.setText("Hit the tree");
+        ui.choice2.setText("Go North");
+        ui.choice3.setText("Go South");
+        ui.choice4.setText("Go West(cross the river)");
+        nextPosition1 = "hitTheAppleTree";
+        nextPosition2 = "mountainside";
+        nextPosition3 = "";
+        nextPosition4 = "riverSide";
+
     }
 
     public void hitTheAppleTree() {
@@ -382,7 +489,6 @@ public class Story {
 
     public boolean crossTheRiver() {
         if (rand.nextInt(3) == 0) {
-            encounterRiverMonster();
             return false;
         } else return true;
     }
@@ -395,55 +501,38 @@ public class Story {
         ui.choice4.setText("");
         if (monster.getName().equalsIgnoreCase("Goblin")) {
             nextPosition1 = "attackGoblin";
-            nextPosition2 = "tryToRunGoblin";
         } else if (monster.getName().equalsIgnoreCase("River monster")) {
             nextPosition1 = "attackRiverMonster";
-            nextPosition2 = "tryToRunRiverMonster";
         }
+        nextPosition2 = "tryToRun";
         nextPosition3 = "";
         nextPosition4 = "";
     }
 
     public void attackGoblin() {
-        position = "attackGoblin";
         attackMonster(goblin);
         updatePlayerHealth();
         if (player.getPlayerHP() == 0)
             deadScreen();
         else if (goblin.getMonsterCurrentHP() == 0) {
-            isDefeatedGoblin = true;
+            isALiveGoblin = false;
             JOptionPane.showMessageDialog(ui.window, "You have defeated the goblin!");
             goblinCave();
         } else encounterMonster(goblin);
     }
 
-    public void tryToRunGoblin() {
-        position = "tryToRunGoblin";
-        if (tryToRun(goblin))
-            crossRoad();
-        else encounterMonster(goblin);
-    }
-
     public void attackRiverMonster() {
-        position = "attackRiverMonster";
         attackMonster(riverMonster);
         updatePlayerHealth();
         if (player.getPlayerHP() == 0)
             deadScreen();
         else if (riverMonster.getMonsterCurrentHP() == 0) {
-            isDefeatedRiverMonster = true;
+            isALiveRiverMonster = false;
             JOptionPane.showMessageDialog(ui.window, "You have defeated the river monster!\nYou obtained a trident");
             player.addWeapon(weaponMap.get("Trident"));
             ui.weaponComboBox.addItem(weaponMap.get("Trident").getName());
             southRiver();
         } else encounterMonster(riverMonster);
-    }
-
-    public void tryToRunRiverMonster() {
-        position = "tryToRunRiverMonster";
-        if (tryToRun(riverMonster))
-            riverSide();
-        else encounterMonster(riverMonster);
     }
 
     public void attackMonster(Monster monster) {
@@ -462,21 +551,21 @@ public class Story {
         player.loseHP(monsterDamage);
     }
 
-    public boolean tryToRun(Monster monster) {
+    public void tryToRun() {
         if (rand.nextBoolean()) {
             JOptionPane.showMessageDialog(ui.window, "You dodged the monster's attack and run away!");
-            return true;
+            selectedPosition(lastPosition);
         } else {
             int damageTaken = (int) Math.ceil(1 * difficultRate);
             JOptionPane.showMessageDialog(ui.window, "You've failed to escape and been taken " + damageTaken + " damage from the monster!");
             player.loseHP(damageTaken);
-            ui.hpNumberLabel.setText(player.getPlayerHP() + "/20");
-            return false;
+            ui.hpLabel.setText("HP: " + player.getPlayerHP() + "/20");
+            selectedPosition(position);
         }
     }
 
     public void updatePlayerHealth() {
-        ui.hpNumberLabel.setText(player.getPlayerHP() + "/20");
+        ui.hpLabel.setText("HP: " + player.getPlayerHP() + "/20");
     }
 
     public void deadScreen() {

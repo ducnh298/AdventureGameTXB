@@ -5,7 +5,6 @@ import view.UI;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 
 public class Game {
 
@@ -38,6 +37,9 @@ public class Game {
                     break;
                 case "quit":
                     System.exit(0);
+                    break;
+                case "map":
+                    story.selectedPosition("map");
                     break;
                 case "c1":
                     story.selectedPosition(story.nextPosition1);
