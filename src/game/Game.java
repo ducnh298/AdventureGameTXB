@@ -15,10 +15,11 @@ public class Game {
     }
 
     public Game() {
-        ui.createUI(choiceHandler);
+        ui.createTitleScreen(choiceHandler);
+        ui.createGameScreen(choiceHandler);
         vm.showTitleScreen();
+        ui.loadImg();
     }
-
 
     public class ChoiceHandler implements ActionListener {
 
@@ -46,6 +47,9 @@ public class Game {
                     break;
                 case "c4":
                     story.selectedPosition(story.nextPosition4);
+                    break;
+                case "map":
+                    story.selectedPosition("map");
                     break;
             }
 

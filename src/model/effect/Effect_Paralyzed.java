@@ -1,0 +1,10 @@
+package model.effect;
+
+import model.Effect;
+
+public class Effect_Paralyzed extends Effect {
+    public Effect_Paralyzed() {
+        super("Paralyzed", 1, 0);
+        description = "The lightning power courses through the monster, leaving it paralyzed and unable to launch any further attacks against you.";
+    }
+}

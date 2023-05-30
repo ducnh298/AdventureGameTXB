@@ -1,32 +1,29 @@
 package model;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class Monster {
     private String name;
     private int monsterMaxHP;
     private int monsterCurrentHP;
     private int attackDamage;
-    private String effect = "";
+    private int criticalAttackDamage;
+    private List<Effect> effects = new LinkedList<>();
 
-    public Monster(String name, int monsterMaxHP, int attackDamage, double difficultRate) {
+    public Monster(String name, int monsterMaxHP, int attackDamage, int criticalAttackDamage, double difficultRate) {
         this.name = name;
         this.monsterMaxHP = this.monsterCurrentHP = (int) Math.ceil(monsterMaxHP * difficultRate);
         this.attackDamage = (int) Math.ceil(attackDamage * difficultRate);
+        this.criticalAttackDamage = (int) Math.ceil(criticalAttackDamage * difficultRate);
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getMonsterMaxHP() {
         return monsterMaxHP;
-    }
-
-    public void setMonsterMaxHP(int monsterMaxHP) {
-        this.monsterMaxHP = monsterMaxHP;
     }
 
     public void restoreHP(int amount) {
@@ -49,11 +46,19 @@ public class Monster {
         return attackDamage;
     }
 
-    public String getEffect() {
-        return effect;
+    public int getCriticalAttackDamage() {
+        return criticalAttackDamage;
     }
 
-    public void setEffect(String effect) {
-        this.effect = effect;
+    public List<Effect> getEffects() {
+        return effects;
+    }
+
+    public void addEffect(Effect effect) {
+        this.effects.add(effect);
+    }
+
+    public void removeEffect(Effect effect) {
+        this.effects.remove(effect);
     }
 }

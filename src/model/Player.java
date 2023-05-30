@@ -9,7 +9,7 @@ public class Player {
     private int baseAttack = 0;
     private List<Weapon> weaponList = new ArrayList<>();
     private Armor armor;
-    private Spell spell;
+    private List<Spell> spellList = new ArrayList<>();
 
     public Player(int playerMaxHP) {
         this.playerMaxHP = this.playerHP = playerMaxHP;
@@ -18,7 +18,7 @@ public class Player {
     public Player(int playerMaxHP, int baseAttack) {
         this.playerMaxHP = this.playerHP = playerMaxHP;
         this.baseAttack = baseAttack;
-        this.spell = null;
+        this.spellList = null;
         this.armor = null;
     }
 
@@ -67,11 +67,6 @@ public class Player {
         weaponList.add(weapon);
     }
 
-    public Weapon getWeapon(String name) {
-        return weaponList.stream().filter(weapon -> weapon.getName().equalsIgnoreCase(name)).findAny()
-                .orElse(new Weapon("unknown weapon", 0, 1));
-    }
-
     public Armor getArmor() {
         return armor;
     }
@@ -80,11 +75,11 @@ public class Player {
         this.armor = armor;
     }
 
-    public Spell getSpell() {
-        return spell;
+    public List<Spell> getSpellList() {
+        return spellList;
     }
 
-    public void setSpell(Spell spell) {
-        this.spell = spell;
+    public void addSpell(Spell spell) {
+        spellList.add(spell);
     }
 }

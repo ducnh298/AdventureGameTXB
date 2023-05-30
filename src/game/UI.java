@@ -8,11 +8,11 @@ import java.awt.*;
 public class UI {
     JFrame window;
     public JPanel titleNamePanel, difficultySelectPanel, startButtonPanel, startImagePanel, gameImagePanel, mainTextPanel, choiceButtonPanel, playerStatPanel;
-    JLabel titleNameLabel, difficultyLabel, startImageLabel, hpLabel, armorLabel, gameImageLabel, spellLabel;
+    JLabel titleNameLabel, difficultyLabel, startImageLabel, hpLabel, armorLabel, gameImageLabel;
     JMenuBar menuBar;
     JMenu menu;
     JMenuItem menuItem1, menuItem2;
-    JComboBox difficultyComboBox, weaponComboBox;
+    JComboBox difficultyComboBox, weaponComboBox, spellComboBox;
     JButton startButton, mapButton, choice1, choice2, choice3, choice4;
     JTextArea mainTextArea;
 
@@ -23,8 +23,8 @@ public class UI {
             demonHideoutImg, demonHideoutAfterBattleImg, shadowSerpentImg, demonKingImg, explosionImg,
             deadScreenImg, theEndImg;
 
-    int width = 1280;
-    int height = 960;
+    int width = 1440;
+    int height = 900;
     int widthGameImg = width * 7 / 12;
     int heightGameImg = height * 7 / 12;
     Font titleFont = new Font("Times New Roman", Font.PLAIN, 85);
@@ -33,8 +33,7 @@ public class UI {
     DefaultComboBoxModel difficulties = new DefaultComboBoxModel(new Difficulty[]{Difficulty.EASY, Difficulty.MEDIUM, Difficulty.HARD, Difficulty.EXTREMEHARD});
     double difficultRate = 1;
 
-    public void createUI(Game.ChoiceHandler choiceHandler) {
-
+    public void createTitleScreen(Game.ChoiceHandler choiceHandler) {
         // WINDOW
         window = new JFrame();
         window.setTitle("AdventureGameTXB");
@@ -112,10 +111,12 @@ public class UI {
         UIManager.put("OptionPane.buttonFont", normalFont);
 
         window.setVisible(true);
+    }
 
-        // GAME SCREEN
+    // GAME SCREEN
+    public void createGameScreen(Game.ChoiceHandler choiceHandler) {
         playerStatPanel = new JPanel();
-        playerStatPanel.setBounds(width * 8 / 12, height / 60, width * 7 / 24, height * 6 / 12);
+        playerStatPanel.setBounds(width * 8 / 12, height / 60, width * 11 / 36, height * 6 / 12);
         playerStatPanel.setBackground(Color.decode("#D4FAFA"));
         playerStatPanel.setLayout(new GridLayout(5, 1));
 
@@ -130,13 +131,13 @@ public class UI {
         weaponComboBox = new JComboBox();
         weaponComboBox.setForeground(Color.decode("#03c03c"));
         weaponComboBox.setFont(normalFont);
-        weaponComboBox.setSize(100, 50);
         weaponComboBox.setFocusable(false);
 
-        spellLabel = new JLabel("");
-        spellLabel.setSize(250, 50);
-        spellLabel.setFont(normalFont);
-        spellLabel.setVisible(false);
+        spellComboBox = new JComboBox();
+        spellComboBox.setForeground(Color.decode("#cf1920"));
+        spellComboBox.setFont(normalFont);
+        spellComboBox.setFocusable(false);
+        spellComboBox.setVisible(false);
 
         mapButton = new JButton("Map");
         mapButton.setFont(normalFont);
@@ -205,10 +206,25 @@ public class UI {
         gameImagePanel.setVisible(false);
 
         gameImageLabel = new JLabel();
-        mapImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/map.png")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
+
+        playerStatPanel.add(hpLabel);
+        playerStatPanel.add(armorLabel);
+        playerStatPanel.add(weaponComboBox);
+        playerStatPanel.add(spellComboBox);
+        playerStatPanel.add(mapButton);
+        mainTextPanel.add(mainTextArea);
+        gameImagePanel.add(gameImageLabel);
+        window.add(mainTextPanel);
+        window.add(choiceButtonPanel);
+        window.add(playerStatPanel);
+        window.add(gameImagePanel);
+    }
+
+    public void loadImg() {
         townGateImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/townGate.png")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
         crossRoadImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/crossRoad.png")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
         guardImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/guard.gif")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
+        mapImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/map.png")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
         goblinCaveImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/goblinCave.png")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
         insideGoblinCaveImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/insideGoblinCave.png")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
         goblinImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/goblin.gif")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
@@ -227,17 +243,5 @@ public class UI {
         demonHideoutAfterBattleImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/demonHideoutAfterBattle.png")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
         deadScreenImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/deadScreen.png")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
         theEndImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/theEnd.gif")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
-
-        playerStatPanel.add(hpLabel);
-        playerStatPanel.add(armorLabel);
-        playerStatPanel.add(weaponComboBox);
-        playerStatPanel.add(spellLabel);
-        playerStatPanel.add(mapButton);
-        mainTextPanel.add(mainTextArea);
-        gameImagePanel.add(gameImageLabel);
-        window.add(mainTextPanel);
-        window.add(choiceButtonPanel);
-        window.add(playerStatPanel);
-        window.add(gameImagePanel);
     }
 }

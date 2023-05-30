@@ -3,16 +3,16 @@ package model;
 public class Spell {
     protected String name;
     protected int damage;
-    protected String specialEffect;
+    protected Effect effect;
+    protected String description;
     protected int coolDown;
     protected int coolDownRemain = 0;
-    protected String hexColorCode;
 
-    public Spell(String name, int damage, int coolDown, String hexColorCode) {
+    public Spell(String name, int damage, int coolDown, Effect effect) {
         this.name = name;
         this.damage = damage;
         this.coolDown = coolDown;
-        this.hexColorCode = hexColorCode;
+        this.effect = effect;
     }
 
     public String getName() {
@@ -40,11 +40,11 @@ public class Spell {
         return damage;
     }
 
-    public String getSpecialEffect() {
-        return specialEffect;
+    public Effect getEffect() {
+        return effect;
     }
 
-    public String getHexColorCode() {
-        return hexColorCode;
+    public String getDescription() {
+        return description;
     }
 }
