@@ -1,6 +1,4 @@
-package controller;
-
-import view.UI;
+package game;
 
 public class VisibilityManager {
     UI ui;

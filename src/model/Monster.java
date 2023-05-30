@@ -5,11 +5,12 @@ public class Monster {
     private int monsterMaxHP;
     private int monsterCurrentHP;
     private int attackDamage;
+    private String effect = "";
 
-    public Monster(String name, int monsterMaxHP, int attackDamage) {
+    public Monster(String name, int monsterMaxHP, int attackDamage, double difficultRate) {
         this.name = name;
-        this.monsterMaxHP = this.monsterCurrentHP = monsterMaxHP;
-        this.attackDamage = attackDamage;
+        this.monsterMaxHP = this.monsterCurrentHP = (int) Math.ceil(monsterMaxHP * difficultRate);
+        this.attackDamage = (int) Math.ceil(attackDamage * difficultRate);
     }
 
     public String getName() {
@@ -48,4 +49,11 @@ public class Monster {
         return attackDamage;
     }
 
+    public String getEffect() {
+        return effect;
+    }
+
+    public void setEffect(String effect) {
+        this.effect = effect;
+    }
 }

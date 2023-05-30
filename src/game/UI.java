@@ -1,6 +1,5 @@
-package view;
+package game;
 
-import controller.Game;
 import model.Difficulty;
 
 import javax.swing.*;
@@ -9,7 +8,7 @@ import java.awt.*;
 public class UI {
     JFrame window;
     public JPanel titleNamePanel, difficultySelectPanel, startButtonPanel, startImagePanel, gameImagePanel, mainTextPanel, choiceButtonPanel, playerStatPanel;
-    JLabel titleNameLabel, difficultyLabel, startImageLabel, hpLabel, armorLabel, gameImageLabel;
+    JLabel titleNameLabel, difficultyLabel, startImageLabel, hpLabel, armorLabel, gameImageLabel, spellLabel;
     JMenuBar menuBar;
     JMenu menu;
     JMenuItem menuItem1, menuItem2;
@@ -17,7 +16,12 @@ public class UI {
     JButton startButton, mapButton, choice1, choice2, choice3, choice4;
     JTextArea mainTextArea;
 
-    ImageIcon mapImg, townGateImg, guardImg, angryGuardImg, crossRoadImg, goblinCaveImg, goblinImg, riverSideImg,riverMonsterImg, northRiverImg, southRiverImg, jungleImg, blackSmithHouseImg;
+    ImageIcon mapImg, townGateImg, guardImg, crossRoadImg,
+            goblinCaveImg, insideGoblinCaveImg, goblinImg,
+            riverSideImg, riverMonsterImg, northRiverImg, southRiverImg, blackSmithHouseImg,
+            jungleImg, mountainImg, mountainTopImg,
+            demonHideoutImg, demonHideoutAfterBattleImg, shadowSerpentImg, demonKingImg, explosionImg,
+            deadScreenImg, theEndImg;
 
     int width = 1280;
     int height = 960;
@@ -25,7 +29,7 @@ public class UI {
     int heightGameImg = height * 7 / 12;
     Font titleFont = new Font("Times New Roman", Font.PLAIN, 85);
     Font normalFont = new Font("Times New Roman", Font.PLAIN, 38);
-    Font textFont = new Font("Times New Roman", Font.PLAIN, 30);
+    Font textFont = new Font("Times New Roman", Font.PLAIN, 28);
     DefaultComboBoxModel difficulties = new DefaultComboBoxModel(new Difficulty[]{Difficulty.EASY, Difficulty.MEDIUM, Difficulty.HARD, Difficulty.EXTREMEHARD});
     double difficultRate = 1;
 
@@ -73,7 +77,7 @@ public class UI {
         startImageLabel = new JLabel(imgIcon);
 
         difficultySelectPanel = new JPanel();
-        difficultySelectPanel.setBounds(width / 2 - 150, height / 2 + 150, 300, 80);
+        difficultySelectPanel.setBounds(width / 2 - 175, height / 2 + 150, 350, 80);
         difficultySelectPanel.setBackground(Color.decode("#D4FAFA"));
         difficultySelectPanel.setLayout(new GridLayout(2, 1));
         difficultyLabel = new JLabel("DIFFICULTY", SwingConstants.CENTER);
@@ -111,23 +115,28 @@ public class UI {
 
         // GAME SCREEN
         playerStatPanel = new JPanel();
-        playerStatPanel.setBounds(width * 8 / 12, height / 60, width * 3 / 12, height * 6/12);
+        playerStatPanel.setBounds(width * 8 / 12, height / 60, width * 7 / 24, height * 6 / 12);
         playerStatPanel.setBackground(Color.decode("#D4FAFA"));
-        playerStatPanel.setLayout(new GridLayout(4, 1));
+        playerStatPanel.setLayout(new GridLayout(5, 1));
 
         hpLabel = new JLabel("HP: ");
         hpLabel.setForeground(Color.RED);
         hpLabel.setFont(normalFont);
 
-        armorLabel = new JLabel("+Armor");
-        armorLabel.setForeground(Color.decode("#D4FAFA"));
+        armorLabel = new JLabel("");
         armorLabel.setFont(normalFont);
+        armorLabel.setVisible(false);
 
         weaponComboBox = new JComboBox();
         weaponComboBox.setForeground(Color.decode("#03c03c"));
         weaponComboBox.setFont(normalFont);
-        weaponComboBox.setSize(150, 50);
+        weaponComboBox.setSize(100, 50);
         weaponComboBox.setFocusable(false);
+
+        spellLabel = new JLabel("");
+        spellLabel.setSize(250, 50);
+        spellLabel.setFont(normalFont);
+        spellLabel.setVisible(false);
 
         mapButton = new JButton("Map");
         mapButton.setFont(normalFont);
@@ -141,7 +150,7 @@ public class UI {
         mapButton.setVisible(false);
 
         mainTextPanel = new JPanel();
-        mainTextPanel.setBounds(width * 1 / 36, height * 15/24, width * 7 / 12, height * 4 / 12);
+        mainTextPanel.setBounds(width * 1 / 36, height * 15 / 24, width * 7 / 12, height * 4 / 12);
         mainTextPanel.setBackground(Color.decode("#D4FAFA"));
         mainTextArea = new JTextArea("This is main text area");
         mainTextArea.setBounds(width / 60, height / 60, width * 7 / 12, height * 4 / 12);
@@ -150,9 +159,10 @@ public class UI {
         mainTextArea.setFont(textFont);
         mainTextArea.setLineWrap(true);
         mainTextArea.setWrapStyleWord(true);
+        mainTextArea.setEditable(false);
 
         choiceButtonPanel = new JPanel();
-        choiceButtonPanel.setBounds(width * 8 / 12 , height * 15/24, width * 7 / 24, height * 3 / 12);
+        choiceButtonPanel.setBounds(width * 8 / 12, height * 15 / 24, width * 7 / 24, height * 3 / 12);
         choiceButtonPanel.setBackground(Color.WHITE);
         choiceButtonPanel.setLayout(new GridLayout(4, 1));
 
@@ -200,6 +210,7 @@ public class UI {
         crossRoadImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/crossRoad.png")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
         guardImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/guard.gif")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
         goblinCaveImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/goblinCave.png")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
+        insideGoblinCaveImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/insideGoblinCave.png")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
         goblinImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/goblin.gif")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
         riverSideImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/riverSide.png")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
         northRiverImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/northRiver.png")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
@@ -207,10 +218,20 @@ public class UI {
         riverMonsterImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/riverMonster.gif")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
         blackSmithHouseImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/blacksmithHouse.gif")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
         jungleImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/jungle.png")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
+        mountainImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/mountain.png")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
+        mountainTopImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/mountainTop.png")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
+        demonHideoutImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/demonHideout.png")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
+        shadowSerpentImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/shadowSerpent.gif")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
+        demonKingImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/demonKing.gif")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
+        explosionImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/explosion.gif")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
+        demonHideoutAfterBattleImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/demonHideoutAfterBattle.png")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
+        deadScreenImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/deadScreen.png")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
+        theEndImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/theEnd.gif")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
 
         playerStatPanel.add(hpLabel);
         playerStatPanel.add(armorLabel);
         playerStatPanel.add(weaponComboBox);
+        playerStatPanel.add(spellLabel);
         playerStatPanel.add(mapButton);
         mainTextPanel.add(mainTextArea);
         gameImagePanel.add(gameImageLabel);

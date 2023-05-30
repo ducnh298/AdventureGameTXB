@@ -1,7 +1,4 @@
-package controller;
-
-import view.Story;
-import view.UI;
+package game;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,9 +34,6 @@ public class Game {
                     break;
                 case "quit":
                     System.exit(0);
-                    break;
-                case "map":
-                    story.selectedPosition("map");
                     break;
                 case "c1":
                     story.selectedPosition(story.nextPosition1);

@@ -1,14 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9a7e5983-4591-493c-a3b9-da1c6c1ba2d0" name="Changes" comment="Restruct code, add menu to restart or quit game">
+    <list default="true" id="9a7e5983-4591-493c-a3b9-da1c6c1ba2d0" name="Changes" comment="Redesign game display, Add image">
+      <change afterPath="$PROJECT_DIR$/src/game/Story.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/model/Spell.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/model/armors/Armor_GoldenArmor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/model/armors/Armor_IronArmor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/model/armors/Armor_SilverArmor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/model/monsters/Monster_DemonKing.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/model/monsters/Monster_Goblin.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/model/monsters/Monster_RiverMonster.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/model/monsters/Monster_ShadowSerpent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/model/spells/Spell_FireBall.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/model/spells/Spell_LightningBolt.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/model/spells/Spell_WaterSurge.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/model/weapons/Weapon_DemonSword.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/model/weapons/Weapon_Knife.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/model/weapons/Weapon_LongSword.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/model/weapons/Weapon_Trident.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/VisibilityManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/VisibilityManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/img/Map.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/img/map.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/Story.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/Story.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/UI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/UI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/VisibilityManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/VisibilityManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/img/riverSide.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/img/riverSide.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Armor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Armor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Monster.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Monster.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/Story.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/UI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/UI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,11 +65,11 @@
 }</component>
   <component name="RunManager" selected="Application.Game">
     <configuration name="Game" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="controller.Game" />
+      <option name="MAIN_CLASS_NAME" value="game.Game" />
       <module name="TXAdventureGame" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="controller.*" />
+          <option name="PATTERN" value="game.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -95,7 +114,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683802543972</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Redesign game display, Add image">
+      <created>1685006348798</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1685006348798</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -112,6 +138,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first commit" />
     <MESSAGE value="Restruct code, add menu to restart or quit game" />
-    <option name="LAST_COMMIT_MESSAGE" value="Restruct code, add menu to restart or quit game" />
+    <MESSAGE value="Redesign game display, Add image" />
+    <option name="LAST_COMMIT_MESSAGE" value="Redesign game display, Add image" />
   </component>
 </project>
