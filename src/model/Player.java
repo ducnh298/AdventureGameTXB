@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Player {
@@ -10,6 +11,7 @@ public class Player {
     private List<Weapon> weaponList = new ArrayList<>();
     private Armor armor;
     private List<Spell> spellList = new ArrayList<>();
+    private List<Effect> effectList = new LinkedList<>();
 
     public Player(int playerMaxHP) {
         this.playerMaxHP = this.playerHP = playerMaxHP;
@@ -81,5 +83,15 @@ public class Player {
 
     public void addSpell(Spell spell) {
         spellList.add(spell);
+    }
+
+    public List<Effect> getEffectList() {
+        return effectList;
+    }
+    public void addEffect(Effect effect) {
+        effectList.add(effect);
+    }
+    public void removeEffect(Effect effect) {
+        this.effectList.remove(effect);
     }
 }

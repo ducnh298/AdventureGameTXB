@@ -1,28 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9a7e5983-4591-493c-a3b9-da1c6c1ba2d0" name="Changes" comment="Optimize game. Add final boss, spell system">
-      <change afterPath="$PROJECT_DIR$/src/model/Effect.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/model/effect/Effect_Paralyzed.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/model/effect/Effect_Poisonous.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/model/spells/Spell_PoisonBreeze.java" afterDir="false" />
+    <list default="true" id="9a7e5983-4591-493c-a3b9-da1c6c1ba2d0" name="Changes" comment="Optimize game. Improve spell, add effect system">
+      <change afterPath="$PROJECT_DIR$/src/game/CombatManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/game/GameModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/model/monsters/Monster_EvilWitch.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Story.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Story.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Story.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/StoryManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/UI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/UI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/img/riverSide.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/img/riverSide.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/img/southRiver.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/img/southRiver.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/img/background.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/img/townGate.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/img/townGate.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Effect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Effect.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/Monster.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Monster.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Spell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Spell.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/armors/Armor_GoldenArmor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/armors/Armor_GoldenArmor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/armors/Armor_SilverArmor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/armors/Armor_SilverArmor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/effect/Effect_Paralyzed.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/effect/Effect_Paralyzed.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/effect/Effect_Poisonous.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/effect/Effect_Poisonous.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/monsters/Monster_DemonKing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/monsters/Monster_DemonKing.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/monsters/Monster_Goblin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/monsters/Monster_Goblin.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/monsters/Monster_RiverMonster.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/monsters/Monster_RiverMonster.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/monsters/Monster_ShadowSerpent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/monsters/Monster_ShadowSerpent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/spells/Spell_FireBall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/spells/Spell_FireStorm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/spells/Spell_LightningBolt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/spells/Spell_LightningBolt.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/spells/Spell_WaterSurge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/spells/Spell_WaterSurge.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/weapons/Weapon_DemonSword.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/weapons/Weapon_DemonSword.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,7 +121,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685411939466</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Optimize game. Improve spell, add effect system">
+      <created>1685441342492</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1685441342492</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -142,6 +147,28 @@
     <MESSAGE value="Restruct code, add menu to restart or quit game" />
     <MESSAGE value="Redesign game display, Add image" />
     <MESSAGE value="Optimize game. Add final boss, spell system" />
-    <option name="LAST_COMMIT_MESSAGE" value="Optimize game. Add final boss, spell system" />
+    <MESSAGE value="Optimize game. Improve spell, add effect system" />
+    <option name="LAST_COMMIT_MESSAGE" value="Optimize game. Improve spell, add effect system" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/game/CombatManager.java</url>
+          <line>23</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/game/StoryManager.java</url>
+          <line>35</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/game/GameModel.java</url>
+          <line>27</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

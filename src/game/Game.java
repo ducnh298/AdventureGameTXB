@@ -5,19 +5,22 @@ import java.awt.event.ActionListener;
 
 public class Game {
 
-    UI ui = new UI();
-    VisibilityManager vm = new VisibilityManager(ui);
+    UI ui = new UI(1440,960);
+//    UI ui = new UI();
+    VisibilityManager visibilityManager = new VisibilityManager(ui);
     ChoiceHandler choiceHandler = new ChoiceHandler();
-    Story story = new Story(this, ui, vm);
+    GameModel gameModel = new GameModel(ui);
+    StoryManager storyManager = new StoryManager(this);
 
     public static void main(String[] args) {
         new Game();
     }
 
     public Game() {
+        ui.createWindow(choiceHandler);
         ui.createTitleScreen(choiceHandler);
         ui.createGameScreen(choiceHandler);
-        vm.showTitleScreen();
+        visibilityManager.showTitleScreen();
         ui.loadImg();
     }
 
@@ -28,28 +31,30 @@ public class Game {
             String yourChoice = e.getActionCommand();
             switch (yourChoice) {
                 case "start":
-                    story.gameSetup();
+                    gameModel.setup();
+                    visibilityManager.showGameScreen();
+                    storyManager.townGate();
                     break;
                 case "restart":
-                    vm.showTitleScreen();
+                    visibilityManager.showTitleScreen();
                     break;
                 case "quit":
                     System.exit(0);
                     break;
                 case "c1":
-                    story.selectedPosition(story.nextPosition1);
+                    storyManager.selectedPosition(storyManager.nextPosition1);
                     break;
                 case "c2":
-                    story.selectedPosition(story.nextPosition2);
+                    storyManager.selectedPosition(storyManager.nextPosition2);
                     break;
                 case "c3":
-                    story.selectedPosition(story.nextPosition3);
+                    storyManager.selectedPosition(storyManager.nextPosition3);
                     break;
                 case "c4":
-                    story.selectedPosition(story.nextPosition4);
+                    storyManager.selectedPosition(storyManager.nextPosition4);
                     break;
                 case "map":
-                    story.selectedPosition("map");
+                    storyManager.selectedPosition("map");
                     break;
             }
 

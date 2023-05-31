@@ -4,7 +4,8 @@ public class Effect {
     protected String name;
     protected int remain;
     protected int damage;
-    protected String description;
+    protected String descriptionToMonster;
+    protected String descriptionToPlayer;
 
     public Effect(String name, int remain, int damage) {
         this.name = name;
@@ -28,7 +29,11 @@ public class Effect {
         return damage;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDescriptionToMonster() {
+        return descriptionToMonster;
+    }
+
+    public String getDescriptionToPlayer() {
+        return descriptionToPlayer;
     }
 }

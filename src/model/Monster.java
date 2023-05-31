@@ -9,7 +9,7 @@ public class Monster {
     private int monsterCurrentHP;
     private int attackDamage;
     private int criticalAttackDamage;
-    private List<Effect> effects = new LinkedList<>();
+    private List<Effect> effectList = new LinkedList<>();
 
     public Monster(String name, int monsterMaxHP, int attackDamage, int criticalAttackDamage, double difficultRate) {
         this.name = name;
@@ -24,6 +24,10 @@ public class Monster {
 
     public int getMonsterMaxHP() {
         return monsterMaxHP;
+    }
+
+    public void setMonsterCurrentHP(int monsterCurrentHP) {
+        this.monsterCurrentHP = monsterCurrentHP;
     }
 
     public void restoreHP(int amount) {
@@ -50,15 +54,15 @@ public class Monster {
         return criticalAttackDamage;
     }
 
-    public List<Effect> getEffects() {
-        return effects;
+    public List<Effect> getEffectList() {
+        return effectList;
     }
 
     public void addEffect(Effect effect) {
-        this.effects.add(effect);
+        this.effectList.add(effect);
     }
 
     public void removeEffect(Effect effect) {
-        this.effects.remove(effect);
+        this.effectList.remove(effect);
     }
 }

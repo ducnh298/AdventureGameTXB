@@ -18,22 +18,37 @@ public class UI {
 
     ImageIcon mapImg, townGateImg, guardImg, crossRoadImg,
             goblinCaveImg, insideGoblinCaveImg, goblinImg,
-            riverSideImg, riverMonsterImg, northRiverImg, southRiverImg, blackSmithHouseImg,
+            riverSideImg, riverSideWithWitchImg, witchImg, evilWitchImg, riverMonsterImg, northRiverImg, southRiverImg, blackSmithHouseImg,
             jungleImg, mountainImg, mountainTopImg,
             demonHideoutImg, demonHideoutAfterBattleImg, shadowSerpentImg, demonKingImg, explosionImg,
             deadScreenImg, theEndImg;
 
-    int width = 1440;
-    int height = 900;
-    int widthGameImg = width * 7 / 12;
-    int heightGameImg = height * 7 / 12;
-    Font titleFont = new Font("Times New Roman", Font.PLAIN, 85);
-    Font normalFont = new Font("Times New Roman", Font.PLAIN, 38);
-    Font textFont = new Font("Times New Roman", Font.PLAIN, 28);
+    int width, height, widthGameImg, heightGameImg;
+    Font titleFont, statFont, textFont;
     DefaultComboBoxModel difficulties = new DefaultComboBoxModel(new Difficulty[]{Difficulty.EASY, Difficulty.MEDIUM, Difficulty.HARD, Difficulty.EXTREMEHARD});
-    double difficultRate = 1;
 
-    public void createTitleScreen(Game.ChoiceHandler choiceHandler) {
+    public UI() {
+        width = 1280;
+        height = 720;
+        setFont();
+    }
+
+    public UI(int width, int height) {
+        if (width < 1280) width = 1280;
+        if (height < 820) height = 820;
+        this.width = width;
+        this.height = height;
+        setFont();
+    }
+
+    public void setFont() {
+        int acreage = width * height;
+        titleFont = new Font("Times New Roman", Font.PLAIN, (int) Math.ceil(acreage / 20000));
+        statFont = new Font("Times New Roman", Font.PLAIN, (int) Math.ceil(acreage / 35000));
+        textFont = new Font("Times New Roman", Font.PLAIN, (int) Math.ceil(acreage / 45000));
+    }
+
+    public void createWindow(Game.ChoiceHandler choiceHandler) {
         // WINDOW
         window = new JFrame();
         window.setTitle("AdventureGameTXB");
@@ -46,7 +61,7 @@ public class UI {
         //MENU
         menuBar = new JMenuBar();
         menu = new JMenu("Game");
-        menu.setFont(normalFont);
+        menu.setFont(statFont);
         menuItem1 = new JMenuItem("Restart");
         menuItem1.setFont(textFont);
         menuItem1.addActionListener(choiceHandler);
@@ -60,38 +75,40 @@ public class UI {
         menu.add(menuItem2);
         menuBar.add(menu);
         window.setJMenuBar(menuBar);
+    }
 
+    public void createTitleScreen(Game.ChoiceHandler choiceHandler) {
         // TITLE SCREEN
         titleNamePanel = new JPanel();
-        titleNamePanel.setBounds(width / 2 - 400, height / 12 - 50, 800, 100);
+        titleNamePanel.setBounds(width * 2 / 24, height / 12 - 50, width * 10 / 12, height / 12);
         titleNamePanel.setBackground(Color.GREEN);
         titleNameLabel = new JLabel("ADVENTURE GAME");
         titleNameLabel.setForeground(Color.RED);
         titleNameLabel.setFont(titleFont);
 
         startImagePanel = new JPanel();
-        startImagePanel.setBounds(width / 2 - 325, height / 2 - 300, 650, 400);
+        startImagePanel.setBounds(width / 4, height * 9 / 48, width / 2, height / 2);
         startImagePanel.setBackground(Color.WHITE);
         Icon imgIcon = new ImageIcon(this.getClass().getResource("/img/adventurer.gif"));
         startImageLabel = new JLabel(imgIcon);
 
         difficultySelectPanel = new JPanel();
-        difficultySelectPanel.setBounds(width / 2 - 175, height / 2 + 150, 350, 80);
+        difficultySelectPanel.setBounds(width * 3 / 8, height * 17 / 24, width / 4, height / 9);
         difficultySelectPanel.setBackground(Color.decode("#D4FAFA"));
         difficultySelectPanel.setLayout(new GridLayout(2, 1));
         difficultyLabel = new JLabel("DIFFICULTY", SwingConstants.CENTER);
         difficultyLabel.setForeground(Color.MAGENTA);
-        difficultyLabel.setFont(normalFont);
+        difficultyLabel.setFont(statFont);
         difficultyComboBox = new JComboBox(difficulties);
-        difficultyComboBox.setFont(normalFont);
+        difficultyComboBox.setFont(statFont);
 
         startButtonPanel = new JPanel();
-        startButtonPanel.setBounds(width / 2 - 125, height / 2 + 250, 250, 100);
+        startButtonPanel.setBounds(width * 7 / 16, height * 10 / 12, width / 8, height / 10);
         startButtonPanel.setBackground(Color.decode("#D4FAFA"));
         startButton = new JButton("START");
         startButton.setBackground(Color.RED);
         startButton.setForeground(Color.WHITE);
-        startButton.setFont(normalFont);
+        startButton.setFont(statFont);
         startButton.addActionListener(choiceHandler);
         startButton.setActionCommand("start");
         startButton.setFocusPainted(false);
@@ -107,8 +124,8 @@ public class UI {
         window.add(startButtonPanel);
         window.add(startImagePanel);
 
-        UIManager.put("OptionPane.messageFont", normalFont);
-        UIManager.put("OptionPane.buttonFont", normalFont);
+        UIManager.put("OptionPane.messageFont", statFont);
+        UIManager.put("OptionPane.buttonFont", statFont);
 
         window.setVisible(true);
     }
@@ -122,25 +139,25 @@ public class UI {
 
         hpLabel = new JLabel("HP: ");
         hpLabel.setForeground(Color.RED);
-        hpLabel.setFont(normalFont);
+        hpLabel.setFont(statFont);
 
         armorLabel = new JLabel("");
-        armorLabel.setFont(normalFont);
+        armorLabel.setFont(statFont);
         armorLabel.setVisible(false);
 
         weaponComboBox = new JComboBox();
         weaponComboBox.setForeground(Color.decode("#03c03c"));
-        weaponComboBox.setFont(normalFont);
+        weaponComboBox.setFont(statFont);
         weaponComboBox.setFocusable(false);
 
         spellComboBox = new JComboBox();
-        spellComboBox.setForeground(Color.decode("#cf1920"));
-        spellComboBox.setFont(normalFont);
+        spellComboBox.setForeground(Color.decode("#C576F6"));
+        spellComboBox.setFont(statFont);
         spellComboBox.setFocusable(false);
         spellComboBox.setVisible(false);
 
         mapButton = new JButton("Map");
-        mapButton.setFont(normalFont);
+        mapButton.setFont(statFont);
         mapButton.setSize(100, 80);
         mapButton.setForeground(Color.decode("#B1907F"));
         mapButton.setBackground(Color.decode("#D4FAFA"));
@@ -163,7 +180,7 @@ public class UI {
         mainTextArea.setEditable(false);
 
         choiceButtonPanel = new JPanel();
-        choiceButtonPanel.setBounds(width * 8 / 12, height * 15 / 24, width * 7 / 24, height * 3 / 12);
+        choiceButtonPanel.setBounds(width * 8 / 12, height * 15 / 24, width * 11 / 36, height * 3 / 12);
         choiceButtonPanel.setBackground(Color.WHITE);
         choiceButtonPanel.setLayout(new GridLayout(4, 1));
 
@@ -201,12 +218,16 @@ public class UI {
         choiceButtonPanel.add(choice4);
 
         gameImagePanel = new JPanel();
-        gameImagePanel.setBounds(width * 1 / 36, 0, width * 7 / 12, height * 7 / 12);
+        gameImagePanel.setBounds(width * 1 / 36, 20, width * 7 / 12, height * 7 / 12);
         gameImagePanel.setBackground(Color.decode("#D4FAFA"));
         gameImagePanel.setVisible(false);
 
         gameImageLabel = new JLabel();
 
+        window.add(mainTextPanel);
+        window.add(choiceButtonPanel);
+        window.add(playerStatPanel);
+        window.add(gameImagePanel);
         playerStatPanel.add(hpLabel);
         playerStatPanel.add(armorLabel);
         playerStatPanel.add(weaponComboBox);
@@ -214,13 +235,11 @@ public class UI {
         playerStatPanel.add(mapButton);
         mainTextPanel.add(mainTextArea);
         gameImagePanel.add(gameImageLabel);
-        window.add(mainTextPanel);
-        window.add(choiceButtonPanel);
-        window.add(playerStatPanel);
-        window.add(gameImagePanel);
     }
 
     public void loadImg() {
+        widthGameImg = width * 7 / 12;
+        heightGameImg = height * 7 / 12;
         townGateImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/townGate.png")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
         crossRoadImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/crossRoad.png")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
         guardImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/guard.gif")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
@@ -229,6 +248,9 @@ public class UI {
         insideGoblinCaveImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/insideGoblinCave.png")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
         goblinImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/goblin.gif")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
         riverSideImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/riverSide.png")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
+        riverSideWithWitchImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/riverSideWithWitch.png")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
+        witchImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/witch.png")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
+        evilWitchImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/evilWitch.png")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
         northRiverImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/northRiver.png")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
         southRiverImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/southRiver.png")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
         riverMonsterImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/riverMonster.gif")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
