@@ -13,7 +13,6 @@ public class GameModel {
     Weapon knife, longSword, trident, demonSword;
     Armor[] armors;
     Spell selectedSpell, fireStorm, lightningBolt, waterSurge, poisonBreeze;
-    Effect paralyzedEffect, poisonousEffect;
 
     Monster goblin, evilWitch, riverMonster, shadowSerpent, demonKing;
 

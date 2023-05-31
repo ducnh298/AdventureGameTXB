@@ -7,18 +7,19 @@ import java.awt.*;
 
 public class UI {
     JFrame window;
-    public JPanel titleNamePanel, difficultySelectPanel, startButtonPanel, startImagePanel, gameImagePanel, mainTextPanel, choiceButtonPanel, playerStatPanel;
+    JPanel titleNamePanel, difficultySelectPanel, startButtonPanel, startImagePanel, gameImagePanel, mainTextPanel, choiceButtonPanel, playerStatPanel;
     JLabel titleNameLabel, difficultyLabel, startImageLabel, hpLabel, armorLabel, gameImageLabel;
     JMenuBar menuBar;
     JMenu menu;
     JMenuItem menuItem1, menuItem2;
-    JComboBox difficultyComboBox, weaponComboBox, spellComboBox;
+    JComboBox difficultyComboBox;
+    JComboBox<String> weaponComboBox, spellComboBox;
     JButton startButton, mapButton, choice1, choice2, choice3, choice4;
     JTextArea mainTextArea;
 
     ImageIcon mapImg, townGateImg, guardImg, crossRoadImg,
             goblinCaveImg, insideGoblinCaveImg, goblinImg,
-            riverSideImg, riverSideWithWitchImg, witchImg, evilWitchImg, riverMonsterImg, northRiverImg, southRiverImg, blackSmithHouseImg,
+            riverSideImg, riverSideWithWitchImg, witchImg, defeatedWitchImg, evilWitchImg, riverMonsterImg, northRiverImg, southRiverImg, blackSmithHouseImg,
             jungleImg, mountainImg, mountainTopImg,
             demonHideoutImg, demonHideoutAfterBattleImg, shadowSerpentImg, demonKingImg, explosionImg,
             deadScreenImg, theEndImg;
@@ -43,9 +44,9 @@ public class UI {
 
     public void setFont() {
         int acreage = width * height;
-        titleFont = new Font("Times New Roman", Font.PLAIN, (int) Math.ceil(acreage / 20000));
-        statFont = new Font("Times New Roman", Font.PLAIN, (int) Math.ceil(acreage / 35000));
-        textFont = new Font("Times New Roman", Font.PLAIN, (int) Math.ceil(acreage / 45000));
+        titleFont = new Font("Times New Roman", Font.PLAIN, (int) acreage / 20000);
+        statFont = new Font("Times New Roman", Font.PLAIN, acreage / 35000);
+        textFont = new Font("Times New Roman", Font.PLAIN, acreage / 45000);
     }
 
     public void createWindow(Game.ChoiceHandler choiceHandler) {
@@ -124,8 +125,8 @@ public class UI {
         window.add(startButtonPanel);
         window.add(startImagePanel);
 
-        UIManager.put("OptionPane.messageFont", statFont);
-        UIManager.put("OptionPane.buttonFont", statFont);
+        UIManager.put("OptionPane.messageFont", textFont);
+        UIManager.put("OptionPane.buttonFont", textFont);
 
         window.setVisible(true);
     }
@@ -250,6 +251,7 @@ public class UI {
         riverSideImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/riverSide.png")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
         riverSideWithWitchImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/riverSideWithWitch.png")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
         witchImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/witch.png")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
+        defeatedWitchImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/defeatedWitch.png")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
         evilWitchImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/evilWitch.png")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
         northRiverImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/northRiver.png")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));
         southRiverImg = new ImageIcon(new ImageIcon(this.getClass().getResource("/img/southRiver.png")).getImage().getScaledInstance(widthGameImg, heightGameImg, Image.SCALE_DEFAULT));

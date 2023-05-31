@@ -1,6 +1,6 @@
 package model;
 
-public class Spell {
+public abstract class Spell {
     protected String name;
     protected int damage;
     protected Effect effect;
@@ -8,11 +8,10 @@ public class Spell {
     protected int coolDown;
     protected int coolDownRemain = 0;
 
-    public Spell(String name, int damage, int coolDown, Effect effect) {
+    protected Spell(String name, int damage, int coolDown) {
         this.name = name;
         this.damage = damage;
         this.coolDown = coolDown;
-        this.effect = effect;
     }
 
     public String getName() {
@@ -47,4 +46,6 @@ public class Spell {
     public String getDescription() {
         return description;
     }
+
+    public abstract void activeEffect();
 }

@@ -1,11 +1,11 @@
 package model;
 
-public class Weapon {
+public abstract class Weapon {
     private String name;
     private int attackDamage;
     private int criticalAttackDamage;
 
-    public Weapon(String name, int attackDamage, int criticalAttackDamage) {
+    protected Weapon(String name, int attackDamage, int criticalAttackDamage) {
         this.name = name;
         this.attackDamage = attackDamage;
         this.criticalAttackDamage = criticalAttackDamage;

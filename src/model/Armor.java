@@ -1,11 +1,11 @@
 package model;
 
-public class Armor {
+public abstract class Armor {
     private String name;
     private int damageReduced;
     private String hexColorCode;
 
-    public Armor(String name, int damageReduced, String hexColor) {
+    protected Armor(String name, int damageReduced, String hexColor) {
         this.name = name;
         this.damageReduced = damageReduced;
         this.hexColorCode = hexColor;

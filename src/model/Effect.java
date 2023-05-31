@@ -1,13 +1,13 @@
 package model;
 
-public class Effect {
+public abstract class Effect {
     protected String name;
     protected int remain;
     protected int damage;
     protected String descriptionToMonster;
     protected String descriptionToPlayer;
 
-    public Effect(String name, int remain, int damage) {
+    protected Effect(String name, int remain, int damage) {
         this.name = name;
         this.remain = remain;
         this.damage = damage;

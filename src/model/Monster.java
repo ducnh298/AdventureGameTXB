@@ -3,7 +3,7 @@ package model;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Monster {
+public abstract class Monster {
     private String name;
     private int monsterMaxHP;
     private int monsterCurrentHP;
@@ -11,7 +11,7 @@ public class Monster {
     private int criticalAttackDamage;
     private List<Effect> effectList = new LinkedList<>();
 
-    public Monster(String name, int monsterMaxHP, int attackDamage, int criticalAttackDamage, double difficultRate) {
+    protected Monster(String name, int monsterMaxHP, int attackDamage, int criticalAttackDamage, double difficultRate) {
         this.name = name;
         this.monsterMaxHP = this.monsterCurrentHP = (int) Math.ceil(monsterMaxHP * difficultRate);
         this.attackDamage = (int) Math.ceil(attackDamage * difficultRate);

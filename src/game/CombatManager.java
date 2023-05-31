@@ -4,7 +4,10 @@ import model.Effect;
 import model.Monster;
 import model.Spell;
 import model.Weapon;
-import model.monsters.*;
+import model.monsters.Monster_DemonKing;
+import model.monsters.Monster_Goblin;
+import model.monsters.Monster_RiverMonster;
+import model.monsters.Monster_ShadowSerpent;
 import model.spells.Spell_PoisonBreeze;
 import model.weapons.Weapon_Trident;
 
@@ -34,11 +37,8 @@ public class CombatManager {
     }
 
     public void encounterEvilWitch() {
-        if (gm.evilWitch == null)
-            gm.evilWitch = new Monster_EvilWitch(gm.difficultRate);
         if (gm.poisonBreeze == null) {
             gm.poisonBreeze = new Spell_PoisonBreeze();
-            gm.poisonousEffect = gm.poisonBreeze.getEffect();
         }
         if (!gm.position.equalsIgnoreCase("encounterEvilWitch"))
             gm.lastPosition = gm.position;
@@ -46,7 +46,8 @@ public class CombatManager {
         ui.gameImageLabel.setIcon(ui.evilWitchImg);
 
         JOptionPane.showMessageDialog(ui.window, "The poison breeze slowly drains your health, leaving you weakened and vulnerable.");
-        gm.player.addEffect(gm.poisonousEffect);
+        gm.poisonBreeze.activeEffect();
+        gm.player.addEffect(gm.poisonBreeze.getEffect());
         encounterMonster(gm.evilWitch);
     }
 
@@ -107,10 +108,15 @@ public class CombatManager {
             if (gm.evilWitch.getMonsterCurrentHP() <= 1) {
                 gm.evilWitch.setMonsterCurrentHP(1);
                 sm.displayTextSlowly(gm.evilWitch.getName() + "'s HP: " + gm.evilWitch.getMonsterCurrentHP() + "/" + gm.evilWitch.getMonsterMaxHP());
-                JOptionPane.showMessageDialog(ui.window, "You have defeated the evil witch!");
+                JOptionPane.showMessageDialog(ui.window, "You have defeated the Evil Witch!");
 
+                for (Effect effect : gm.player.getEffectList()) {
+                    if (effect.getName().equalsIgnoreCase("Poisonous")) {
+                        gm.player.removeEffect(effect);
+                        break;
+                    }
+                }
                 ui.mapButton.setEnabled(true);
-                gm.player.removeEffect(gm.poisonousEffect);
                 gm.isDefeatedEvilWitch = true;
 
                 sm.talkWitch4();
@@ -166,7 +172,7 @@ public class CombatManager {
     public void encounterMonster(Monster monster) {
         ui.mapButton.setEnabled(false);
         StringBuilder monsterStatus = new StringBuilder(monster.getName() + "'s HP: " + monster.getMonsterCurrentHP() + "/" + monster.getMonsterMaxHP() + "\n");
-        if (monster.getEffectList().size() > 0)
+        if (monster.getEffectList().isEmpty())
             for (Effect effect : monster.getEffectList()) {
                 monsterStatus.append(monster.getName());
                 monsterStatus.append(" is ");
@@ -180,35 +186,35 @@ public class CombatManager {
             }
         sm.displayTextSlowly(monsterStatus.toString());
 
-        if (gm.player.getSpellList().size() > 0) {
+        if (gm.player.getSpellList().isEmpty()) {
             sm.updateSpellStatus();
             sm.setChoicesAndNextPositions(new String[]{"Fight", "Use spell", "Try to run", "", "", "", "tryToRun", ""});
         } else sm.setChoicesAndNextPositions(new String[]{"Fight", "Try to run", "", "", "", "tryToRun", "", ""});
 
         if (monster.equals(gm.goblin)) {
             sm.nextPosition1 = "attackGoblin";
-            sm.nextPosition2 = (gm.player.getSpellList().size() > 0) ? "attackGoblinWithSpell" : "tryToRun";
+            sm.nextPosition2 = (gm.player.getSpellList().isEmpty()) ? "attackGoblinWithSpell" : "tryToRun";
         } else if (monster.equals(gm.riverMonster)) {
             sm.nextPosition1 = "attackRiverMonster";
-            sm.nextPosition2 = (gm.player.getSpellList().size() > 0) ? "attackRiverMonsterWithSpell" : "tryToRun";
+            sm.nextPosition2 = (gm.player.getSpellList().isEmpty()) ? "attackRiverMonsterWithSpell" : "tryToRun";
         } else if (monster.equals(gm.shadowSerpent)) {
             sm.nextPosition1 = "attackShadowSerpent";
-            sm.nextPosition2 = (gm.player.getSpellList().size() > 0) ? "attackShadowSerpentWithSpell" : "tryToRun";
+            sm.nextPosition2 = (gm.player.getSpellList().isEmpty()) ? "attackShadowSerpentWithSpell" : "tryToRun";
         } else if (monster.equals(gm.demonKing)) {
             sm.nextPosition1 = "attackDemonKing";
-            sm.nextPosition2 = (gm.player.getSpellList().size() > 0) ? "attackDemonKingWithSpell" : "tryToRun";
+            sm.nextPosition2 = (gm.player.getSpellList().isEmpty()) ? "attackDemonKingWithSpell" : "tryToRun";
         } else if (monster.equals(gm.evilWitch)) {
             sm.nextPosition1 = "attackEvilWitch";
-            sm.nextPosition2 = (gm.player.getSpellList().size() > 0) ? "attackEvilWitchWithSpell" : "tryToRun";
+            sm.nextPosition2 = (gm.player.getSpellList().isEmpty()) ? "attackEvilWitchWithSpell" : "tryToRun";
         }
     }
 
     public boolean attackMonster(Monster monster, boolean useSpell) {
+        boolean monsterAttack = true;
         Spell spell = null;
-        if (gm.player.getSpellList().size() > 0)
-            spell = gm.player.getSpellList().get(ui.spellComboBox.getSelectedIndex());
 
-        if (spell != null && useSpell) {
+        if (useSpell) {
+            spell = gm.player.getSpellList().get(ui.spellComboBox.getSelectedIndex());
             if (spell.getCoolDownRemain() > 0) {
                 JOptionPane.showMessageDialog(ui.window, spell.getName() + " is not ready!");
                 encounterMonster(monster);
@@ -216,39 +222,50 @@ public class CombatManager {
             }
 
             JOptionPane.showMessageDialog(ui.window, "You cast " + spell.getName() + ". " + spell.getDescription());
-            spell.resetCoolDown();
-
             if (spell.getDamage() > 0)
                 monster.loseHP(spell.getDamage());
-            if (spell.getEffect() != null)
+            if (spell.getEffect() != null) {
+                spell.activeEffect();
                 monster.addEffect(spell.getEffect());
-            if (spell.equals(gm.waterSurge))
-                return sm.updatePlayerHp(-spell.getDamage());
+            }
+            if (spell.equals(gm.waterSurge)) {
+                sm.updatePlayerHp(-spell.getDamage());
+                monsterAttack = false;
+            }
         } else {
             Weapon currentWeapon = gm.player.getWeaponList().get(ui.weaponComboBox.getSelectedIndex());
             int playerDamage = gm.player.getBaseAttack() + rand.nextInt(currentWeapon.getCriticalAttackDamage() - currentWeapon.getAttackDamage()) + currentWeapon.getAttackDamage();
             JOptionPane.showMessageDialog(ui.window, "You attacked the " + monster.getName() + " with " + currentWeapon.getName() + " and gave " + playerDamage + " damage!");
             monster.loseHP(playerDamage);
-
-            if (spell != null)
-                spell.decreaseCoolDown();
         }
 
-        if (monster.getEffectList().size() > 0)
+        if (gm.player.getSpellList().isEmpty()) {
+            for (Spell sp : gm.player.getSpellList()) {
+                if (spell != null && sp.getName().equals(spell.getName()))
+                    sp.resetCoolDown();
+                else
+                    sp.decreaseCoolDown();
+            }
+        }
+
+        if (monster.getEffectList().isEmpty())
             for (Effect effect : monster.getEffectList()) {
                 JOptionPane.showMessageDialog(ui.window, effect.getDescriptionToMonster());
 
                 if (effect.getDamage() > 0)
                     monster.loseHP(effect.getDamage());
 
-                effect.reduceRemain();
-                if (effect.getRemain() == 0)
-                    monster.removeEffect(effect);
+                if (effect.getName().equalsIgnoreCase("Paralyzed"))
+                    monsterAttack = false;
 
-                if (effect.equals(gm.paralyzedEffect))
-                    return true;
+                if (spell == null || (spell != null && !spell.getEffect().getName().equals(effect.getName()))) {
+                    effect.reduceRemain();
+                    if (effect.getRemain() == 0)
+                        monster.removeEffect(effect);
+                }
             }
-        if (gm.player.getEffectList().size() > 0)
+
+        if (gm.player.getEffectList().isEmpty())
             for (Effect effect : gm.player.getEffectList()) {
                 JOptionPane.showMessageDialog(ui.window, effect.getDescriptionToPlayer());
 
@@ -260,10 +277,13 @@ public class CombatManager {
                     gm.player.removeEffect(effect);
             }
 
-        int monsterDamage = rand.nextInt(monster.getCriticalAttackDamage() - monster.getAttackDamage()) + monster.getAttackDamage() - (gm.player.getArmor() != null ? gm.player.getArmor().getDamageReduced() : 0);
-        JOptionPane.showMessageDialog(ui.window, "The " + monster.getName() + " attacked you." + (gm.player.getArmor() != null ? (" With " + gm.player.getArmor().getName()) : "") + " you took " + (monsterDamage > 0 ? monsterDamage : 0) + " damage!");
+        if (monsterAttack) {
+            int monsterDamage = rand.nextInt(monster.getCriticalAttackDamage() - monster.getAttackDamage()) + monster.getAttackDamage() - (gm.player.getArmor() != null ? gm.player.getArmor().getDamageReduced() : 0);
+            JOptionPane.showMessageDialog(ui.window, "The " + monster.getName() + " attacked you." + (gm.player.getArmor() != null ? (" With " + gm.player.getArmor().getName()) : "") + " you took " + (monsterDamage > 0 ? monsterDamage : 0) + " damage!");
+            return sm.updatePlayerHp(-monsterDamage);
+        }
 
-        return sm.updatePlayerHp(-monsterDamage);
+        return true;
     }
 
     public void tryToRun() {
@@ -271,12 +291,12 @@ public class CombatManager {
             JOptionPane.showMessageDialog(ui.window, "Escape from the clutches of the witch proves futile as she blocks your path.");
             encounterMonster(gm.evilWitch);
         } else if (rand.nextBoolean()) {
-            JOptionPane.showMessageDialog(ui.window, "You dodged the monster's attack and run away!");
+            JOptionPane.showMessageDialog(ui.window, "With a swift dodge, you evade the monster's attack and successfully escape, fleeing to safety.");
             ui.mapButton.setEnabled(true);
             sm.selectedPosition(gm.lastPosition);
         } else {
             int damageTaken = (int) Math.ceil(2 * gm.difficultRate) - (gm.player.getArmor() != null ? gm.player.getArmor().getDamageReduced() : 0);
-            JOptionPane.showMessageDialog(ui.window, "You've failed to escape and taken " + (damageTaken > 0 ? damageTaken : 0) + " damage from the monster!");
+            JOptionPane.showMessageDialog(ui.window, "Despite your best efforts to escape, you were unable to evade the monster's pursuit and suffered a blow, losing " + (damageTaken > 0 ? damageTaken : 0) + " points of health.");
             if (sm.updatePlayerHp(-damageTaken))
                 sm.selectedPosition(gm.position);
         }

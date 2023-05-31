@@ -6,6 +6,7 @@ import model.Weapon;
 import model.armors.Armor_GoldenArmor;
 import model.armors.Armor_IronArmor;
 import model.armors.Armor_SilverArmor;
+import model.monsters.Monster_EvilWitch;
 import model.spells.Spell_FireStorm;
 import model.spells.Spell_LightningBolt;
 import model.spells.Spell_PoisonBreeze;
@@ -106,6 +107,12 @@ public class StoryManager {
             case "talkWitch3":
                 talkWitch3();
                 break;
+            case "talkWitch4":
+                talkWitch4();
+                break;
+            case "talkWitch5":
+                talkWitch5();
+                break;
             case "encounterEvilWitch":
                 cm.encounterEvilWitch();
                 break;
@@ -114,9 +121,6 @@ public class StoryManager {
                 break;
             case "attackEvilWitchWithSpell":
                 cm.attackEvilWitch(true);
-                break;
-            case "talkWitch4":
-                talkWitch4();
                 break;
             case "enhanceStrength":
                 enhanceStrength();
@@ -247,7 +251,7 @@ public class StoryManager {
     public void talkGuard1() {
         gm.position = "talkGuard1";
         ui.gameImageLabel.setIcon(ui.guardImg);
-        setChoicesAndNextPositions(new String[]{"", "Leave", "", "", "talkGuard2", "townGate", "", ""});
+        setChoicesAndNextPositions(new String[]{"", "Leave", "", "", "talkGuard2", "crossRoad", "", ""});
 
         if (!gm.isAliveDemonKing) {
             displayTextSlowly("\"I heard rumors of the demon king's defeat. Is it true?\" " +
@@ -255,16 +259,22 @@ public class StoryManager {
                     "The guard's stern expression softens, replaced by a genuine smile. " +
                     "\"You've done the town a great service. We owe you our gratitude.\"");
             ui.choice1.setText("\"Can i enter the town now?\"");
+        } else if (gm.isTakenArmor) {
+            displayTextSlowly("The guard who notices your newly acquired armor: \"Ah, I see you're donning your new armor. It suits you well. " +
+                    "There is something else you should know. Legend has it that to the north-east of here, atop the mountain, lies a sacred place. " +
+                    "It is said that those who possess great courage and are recognized as the chosen hero can harness their heroic blood and choose a power that suits them.\"");
+            ui.choice1.setText("\"I'll have it a try\"");
+            nextPosition1 = "crossRoad";
         } else {
             if (gm.isAngryGuard)
                 displayTextSlowly("The guard is clearly angry as they scold you for your attack. " +
-                        "They look dgm.isAppointed and emphasize how crucial it is to keep the town safe. Trust and redemption feel far away in this moment. " +
+                        "They look disappointed and emphasize how crucial it is to keep the town safe. Trust and redemption feel far away in this moment. " +
                         "You quickly apologize and clarify that you're a traveler looking for your brother, following clues that led you here.");
             else
                 displayTextSlowly("Guard: \"Hello, stranger! I cannot let unfamiliar faces into our town. " +
                         "Prove yourself trustworthy, or find another way in.\" " +
                         "You explain your purpose as a traveler searching for your brother, guided by the clues that brought you here. " +
-                        "Seeking assgm.isTance, you inquire about gaining entry, hoping for guidance to reach your destination.");
+                        "Seeking assistance, you inquire about gaining entry, hoping for guidance to reach your destination.");
             ui.choice1.setText("\"How can i enter the town?\"");
         }
     }
@@ -272,7 +282,7 @@ public class StoryManager {
     public void talkGuard2() {
         gm.position = "talkGuard2";
         ui.gameImageLabel.setIcon(ui.guardImg);
-        setChoicesAndNextPositions(new String[]{"", "Leave", "", "", "", "townGate", "", ""});
+        setChoicesAndNextPositions(new String[]{"", "Leave", "", "", "", "crossRoad", "", ""});
 
         if (!gm.isAliveDemonKing) {
             displayTextSlowly("The guard, now aware of your heroic triumph, opens the town gate for you without hesitation.");
@@ -292,10 +302,9 @@ public class StoryManager {
         ui.gameImageLabel.setIcon(ui.guardImg);
         ui.mapButton.setVisible(true);
 
-        displayTextSlowly("\n" +
-                "The guard notices that your current gear is not sufficient to defeat the Demon King. " +
+        displayTextSlowly("The guard notices that your current gear is not sufficient to defeat the Demon King. " +
                 "They hand you a map with the location of the demon king's hideout marked and advise you to visit the blacksmith in the north to acquire better equipment.");
-        setChoicesAndNextPositions(new String[]{"\"Ok! Thank you.\"", "Leave", "", "", "townGate", "townGate", "", ""});
+        setChoicesAndNextPositions(new String[]{"\"Ok! Thank you.\"", "Leave", "", "", "crossRoad", "crossRoad", "", ""});
     }
 
     public void attackGuard() {
@@ -342,7 +351,7 @@ public class StoryManager {
                     "They explain the troubles caused by a mischievous goblin and provide its last known location—a cave to the south. " +
                     "They request that you return once you have successfully dealt with the goblin."
             );
-            ui.choice1.setText("\"Yeah! I'm on it.\"");
+            ui.choice1.setText("\"I got it\"");
             nextPosition1 = "blackSmithHouse";
         } else {
             displayTextSlowly("\"Look like you've killed that goblin. Thank you,\" they acknowledge with gratitude. Their attention then turns to your quest to repulse the Demon King. " +
@@ -351,8 +360,7 @@ public class StoryManager {
                 ui.choice1.setText("Take reward");
                 nextPosition1 = "takeArmor";
             } else if (gm.isTakenArmor) {
-                displayTextSlowly("\"You're ready to face the Demon King with that armor,\" they affirm, their voice full of encouragement. " +
-                        "They believe in your ability to overcome the challenge and offer their unwavering support. " +
+                displayTextSlowly("They believe in your ability to overcome the challenge and offer their unwavering support. " +
                         "The blacksmith advises, \"There's one more thing you should know. " +
                         "The witch who wanders along the river near the goblin cave is known for her trickery. Be cautious and stay alert when you encounter her.\"");
                 ui.choice1.setText("\"Thank you\"");
@@ -452,7 +460,6 @@ public class StoryManager {
 
     public void talkWitch1() {
         gm.position = "talkWitch1";
-
         ui.gameImageLabel.setIcon(ui.witchImg);
 
         displayTextSlowly("\"Hey there, young man,\" the witch addresses you, her gaze filled with curiosity. " +
@@ -463,10 +470,10 @@ public class StoryManager {
 
     public void talkWitch2() {
         gm.position = "talkWitch2";
-
         ui.gameImageLabel.setIcon(ui.witchImg);
+
         gm.witchQuestActive = true;
-        setChoicesAndNextPositions(new String[]{"\"I got it\"", "Attack the witch", "Leave", "", "riverSide", "talkWitch3", "riverSide", ""});
+        setChoicesAndNextPositions(new String[]{"\"I'm on it\"", "Attack the witch", "Leave", "", "riverSide", "talkWitch3", "riverSide", ""});
 
         StringBuilder text = new StringBuilder("As you inquire about the favor, the witch requests that you venture into the jungle on the other side of the river and fetch her a fresh apple. " +
                 "Additionally, she asks for a goblin's left ear, explaining that it holds powerful magical properties.");
@@ -486,23 +493,37 @@ public class StoryManager {
         gm.position = "talkWitch3";
 
         ui.gameImageLabel.setIcon(ui.witchImg);
-        setChoicesAndNextPositions(new String[]{"Fight", "Try to run", "", "", "encounterEvilWitch", "tryToRun", "", ""});
+        setChoicesAndNextPositions(new String[]{"Encounter the Evil Witch", "", "", "", "encounterEvilWitch", "", "", ""});
 
         displayTextSlowly("The witch swiftly snatches the items from your grasp, a sinister grin spreading across her face. " +
                 "Her mocking laughter fills the air as she taunts you for your foolishness. " +
                 "With a flick of her staff, she raises it menacingly, casting a spell enveloping you in a cloud of toxic poison.");
+        if (gm.evilWitch == null)
+            gm.evilWitch = new Monster_EvilWitch(gm.difficultRate);
     }
 
     public void talkWitch4() {
         gm.position = "talkWitch4";
 
-        ui.gameImageLabel.setIcon(ui.witchImg);
+        ui.gameImageLabel.setIcon(ui.defeatedWitchImg);
         gm.witchQuestActive = true;
         setChoicesAndNextPositions(new String[]{"Enhance your strength", "Learn Poison breeze", "Leave", "", "enhanceStrength", "learnPoisonBreeze", "riverSide", ""});
 
-        displayTextSlowly("\"Enough! Spare my life, and I'll give you a reward,\" she begs, desperation evident in her voice. " +
-                "\"No more tricks, I swear.\"" +
+        displayTextSlowly("\"Enough! Spare my life, I'll remove the poison spell casted on you and give you a reward,\" " +
+                "she begs, desperation evident in her voice. \"No more tricks, I swear.\"" +
                 "\"About the reward, I can either enhance your strength, making you even more powerful, or teach you the secret of the poison breeze, a lethal technique.\"");
+    }
+
+    public void talkWitch5() {
+        gm.position = "talkWitch5";
+
+        ui.gameImageLabel.setIcon(ui.riverSideImg);
+
+        setChoicesAndNextPositions(new String[]{"Go North", "Go south", "Go East(cross the river on bridge)", "Go West", "northRiver", "southRiver", "jungle", "crossRoad"});
+
+        displayTextSlowly("As you spare the witch's life and take her power, " +
+                "she quickly realizes the gravity of the situation and hastily retreats, no longer posing a threat to your journey. " +
+                "The path to the south of the river is now clear, allowing you to continue your adventure unhindered.");
     }
 
     public void enhanceStrength() {
@@ -510,16 +531,16 @@ public class StoryManager {
         gm.player.increasePlayerMaxHP(3);
         gm.player.increaseBaseAttack(1);
         updatePlayerHp(0);
-        JOptionPane.showMessageDialog(ui.window, "Your maximum HP is increased by 3, your base attack is enhanced by 1");
+        JOptionPane.showMessageDialog(ui.window, "The witch enhances your strength, granting you a boost in power. Your maximum HP is increased by 3, and your base attack is enhanced by 1");
         riverSide();
     }
 
     public void learnPoisonBreeze() {
         gm.witchQuestActive = false;
         gm.poisonBreeze = new Spell_PoisonBreeze();
-        gm.poisonousEffect = gm.poisonBreeze.getEffect();
         gm.player.addSpell(gm.poisonBreeze);
         ui.spellComboBox.setVisible(true);
+        JOptionPane.showMessageDialog(ui.window, "You learn the skill of Poison Breeze from the witch, acquiring the ability to unleash a toxic and debilitating attack against your enemies.");
         updateSpellStatus();
         riverSide();
     }
@@ -575,7 +596,7 @@ public class StoryManager {
 
     public boolean crossTheRiver() {
         if (gm.isALiveRiverMonster)
-            if (rand.nextInt(3) == 0) {
+            if (rand.nextBoolean()) {
                 cm.encounterRiverMonster();
                 return false;
             }
@@ -612,11 +633,9 @@ public class StoryManager {
         } else if (c1 == 1) {
             JOptionPane.showMessageDialog(ui.window, "You hit the apple tree, angering a nearby monkey. " +
                     "It retaliates by throwing a stick at you, causing " + (int) Math.ceil(2 * gm.difficultRate) + " damage.");
-            if (updatePlayerHp(-((int) Math.ceil(2 * gm.difficultRate))))
-                return;
+            updatePlayerHp(-((int) Math.ceil(2 * gm.difficultRate)));
         } else
             JOptionPane.showMessageDialog(ui.window, "Nothing happen.");
-        return;
     }
 
     public void mountain() {
@@ -627,7 +646,7 @@ public class StoryManager {
         ui.gameImageLabel.setIcon(ui.mountainImg);
         displayTextSlowly("As you approach the towering mountain, your gaze is drawn to the peculiar sight atop its peak. " +
                 "Clusters of massive rock hover in the air, defying the natural laws of gravity. " +
-                "You feel an irresgm.isTible pull to ascend the mountain and uncover the secrets hidden within the realm of the floating rocks.");
+                "You feel an irresistible pull to ascend the mountain and uncover the secrets hidden within the realm of the floating rocks.");
         setChoicesAndNextPositions(new String[]{"Climb to the top", "Go South", "Go West(swim cross the river)", "", "mountainTop", "jungle", "northRiver", ""});
     }
 
@@ -675,15 +694,14 @@ public class StoryManager {
     public void firePower() {
         if (gm.fireStorm == null) gm.fireStorm = new Spell_FireStorm();
         gm.selectedSpell = gm.fireStorm;
-        displayTextSlowly("Fire Power: This power grants the traveler mastery over the element of fire, enabling them to unleash devastating gm. fireStorms that inflict immense damage upon their enemies.\n" +
-                "Unleash a mighty magic gm. fireStorm that scorches your enemies, dealing a significant " + gm.fireStorm.getDamage() + " damage.");
+        displayTextSlowly("Fire Power: This power grants the traveler mastery over the element of fire, enabling them to unleash devastating Fire Storm that inflict immense damage upon their enemies.\n" +
+                "Unleash a mighty magic Fire Storm that scorches your enemies, dealing a significant " + gm.fireStorm.getDamage() + " damage.");
         setChoicesAndNextPositions(new String[]{"Take power", "Back", "", "", "takePower", "offerPower", "", ""});
     }
 
     public void lightningPower() {
         if (gm.lightningBolt == null) {
             gm.lightningBolt = new Spell_LightningBolt();
-            gm.paralyzedEffect = gm.lightningBolt.getEffect();
         }
         gm.selectedSpell = gm.lightningBolt;
         displayTextSlowly("Lightning Power: Harness the electrifying energy of lightning to deal substantial damage to your foes, while also stunning them in their tracks.\n" +
@@ -716,8 +734,7 @@ public class StoryManager {
 
         if (gm.isAliveDemonKing) {
             ui.gameImageLabel.setIcon(ui.demonHideoutImg);
-            displayTextSlowly("\n" +
-                    "As you approach the demon's hideout, the landscape turns singm.isTer and dark. " +
+            displayTextSlowly("As you approach the demon's hideout, the landscape turns singm.isTer and dark. " +
                     "The eerie atmosphere swallows the sunlight, the entrance to the demon's lair stands before you, and you steel yourself for the impending battle, preparing to face the horrors that await within.");
             ui.choice1.setText("Enter");
             if (gm.isAliveShadowSerpent)
@@ -735,8 +752,7 @@ public class StoryManager {
     public void insideDemonHideout() {
         gm.position = "insideDemonHideout";
         ui.gameImageLabel.setIcon(ui.demonHideoutImg);
-        displayTextSlowly("\n" +
-                "With the shadow serpent defeated, you continue your journey, venturing deeper into the heart of the demon's hideout. " +
+        displayTextSlowly("With the shadow serpent defeated, you continue your journey, venturing deeper into the heart of the demon's hideout. " +
                 "The air becomes thick and oppressive, a haunting silence fills the surroundings, increasing the feeling of imminent danger. " +
                 "With each step, you draw nearer to the final showdown with the formidable demon king");
         setChoicesAndNextPositions(new String[]{"Go deeper", "Leave", "", "", "encounterDemonKing", "demonHideout", "", ""});
@@ -746,7 +762,6 @@ public class StoryManager {
         gm.position = "defeatDemonKing";
         ui.gameImageLabel.setIcon(ui.explosionImg);
         displayTextSlowly("As the final blow lands on the demon king, a powerful explosion obliterates the demon's hideout. " +
-                "\n" +
                 "After the battle, you are left barely alive, drained of strength. " +
                 "Exhaustion overwhelms you, and you lose consciousness, unsure of what awaits you in this dangerous situation.");
         setChoicesAndNextPositions(new String[]{"...", "......", "", "", "wakeUpAfterFinalBattle", "wakeUpAfterFinalBattle", "", ""});
