@@ -13,8 +13,8 @@ Welcome to The Legend's Calling, a captivating text-based adventure game where y
 - Illustrating images that enhance the visual experience and immerse you in the game world.
 
 *Requirements*
--Java 8 or higher installed on your system.
--Swing GUI which is included in Java SE.
+- Java 8 or higher installed on your system.
+- Swing GUI which is included in Java SE.
 
 *How to Play*
 1. Clone or download the game repository to your local machine.
